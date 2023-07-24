@@ -127,8 +127,8 @@ export class PrincipalComponent implements OnInit {
           },
           error: (error) => {
             console.error('Error al obtener datos climáticos', error);
-            console.log('Error al obtener datos climáticos', error);
-            this.mostrarModalError('Error al obtener datos climáticos', 'Verifica nombre de país y/o ciudad');
+            // console.log('Error al obtener datos climáticos', error);
+            this.mostrarModalError('Error al obtener datos climáticos', 'Verifica nombre de la ciudad');
           },
           complete: () => {
             this.calcular();
