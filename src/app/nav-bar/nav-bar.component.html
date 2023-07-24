@@ -1,0 +1,48 @@
+<nav class=" bg-black ">
+  <div class="navBarMy d-flex justify-content-between align-items-center">
+
+    <div class="col-ms-6">
+    <div class="m-2">
+      <span class="text-white ms-5 text-uppercase fs-3 " style="margin: 0 !important;">Consumo de cerveza</span>
+    </div>
+    </div>
+
+    <div class="col-ms-6 m-2">
+
+
+      <span class='red m-2'>
+        <a target='blanck' href='https://github.com/JulioLaz'>
+          <svg class='imgFooter' id="github" width="30px" height="30px" viewBox="0 0 64 64" id="i-github"><path stroke-width="0" fill="grey" d="M32 0 C14 0 0 14 0 32 0 53 19 62 22 62 24 62 24 61 24 60 L24 55 C17 57 14 53 13 50 13 50 13 49 11 47 10 46 6 44 10 44 13 44 15 48 15 48 18 52 22 51 24 50 24 48 26 46 26 46 18 45 12 42 12 31 12 27 13 24 15 22 15 22 13 18 15 13 15 13 20 13 24 17 27 15 37 15 40 17 44 13 49 13 49 13 51 20 49 22 49 22 51 24 52 27 52 31 52 42 45 45 38 46 39 47 40 49 40 52 L40 60 C40 61 40 62 42 62 45 62 64 53 64 32 64 14 50 0 32 0 Z"/></svg>
+        </a>
+      </span>
+
+      <span class='red'>
+        <a target='blanck' href='https://www.linkedin.com/in/julio-lazarte-349468248?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BubU1fpKpQi6Kp7t%2FBq5AtA%3D%3D'>
+          <svg id='linkedin' class='imgFooter' x="0px" y="0px"  width="30px" height="30px" viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve"><g><circle style="fill:#007AB9;" cx="56.098" cy="56.097" r="56.098"/><g> <path style="fill:#F1F2F2;" d="M89.616,60.611v23.128H76.207V62.161c0-5.418-1.936-9.118-6.791-9.118    c-3.705,0-5.906,2.491-6.878,4.903c-0.353,0.862-0.444,2.059-0.444,3.268v22.524H48.684c0,0,0.18-36.546,0-40.329h13.411v5.715    c-0.027,0.045-0.065,0.089-0.089,0.132h0.089v-0.132c1.782-2.742,4.96-6.662,12.085-6.662    C83.002,42.462,89.616,48.226,89.616,60.611L89.616,60.611z M34.656,23.969c-4.587,0-7.588,3.011-7.588,6.967    c0,3.872,2.914,6.97,7.412,6.97h0.087c4.677,0,7.585-3.098,7.585-6.97C42.063,26.98,39.244,23.969,34.656,23.969L34.656,23.969z     M27.865,83.739H41.27V43.409H27.865V83.739z"/></g></g></svg>
+        </a>
+      </span>
+
+<!-- Mostrar la imagen solo si no estamos en la página /calcular -->
+<span *ngIf="!isCalcularPage; else regresarLink">
+  <a routerLink="/calcular" title="Ir a la Calculadora manual">
+    <img style="width: 45px; height: 40px;" src="assets/beer.png" alt="Beer Image">
+  </a>
+</span>
+<!-- Alternativa: Mostrar el enlace de regreso a la página principal si estamos en /calcular -->
+<ng-template #regresarLink>
+  <a routerLink="/" title="Ir a la página principal">
+    <img style="width: 45px; height: 40px;" src="assets/beer.png" alt="Beer Image">
+  </a>
+</ng-template>
+
+
+<!--
+      <span >
+        <a routerLink="/calcular">
+        <img style="width:45px; height:40px" src="assets/beer.png" alt="Beer Image">
+        </a>
+      </span> -->
+
+    </div>
+</div>
+</nav>

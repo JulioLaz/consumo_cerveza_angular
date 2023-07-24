@@ -1,0 +1,8 @@
+body {
+  background-image: url('https://www.infobae.com/new-resizer/x_eJjdt4r-8hfKf68aRXzXDZlN8=/992x558/filters:format(webp):quality(85)/arc-anglerfish-arc2-prod-infobae.s3.amazonaws.com/public/MCSYRT2P7BCKDI3LOGL7KNJCQM');
+  /* background-image: url('https://statics.forbesargentina.com/2022/03/crop/62309307f2750__822x460.webp'); */
+  /* background-image: url('https://www.ngenespanol.com/wp-content/uploads/2018/08/7-buenas-razones-para-tomar-cerveza.png'); */
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position: center;
+}

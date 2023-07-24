@@ -1,0 +1,122 @@
+<div class="container card">
+  <h3 class="text-center mt-2">Cálculo del consumo de cerveza</h3>
+  <h4 class="text-center ">basado en condiciones climaticas</h4>
+  <div class="container">
+    <form (submit)="obtenerDatosClimaticos()">
+      <div>
+        <div class="row" style="justify-content: space-bee">
+          <div class="col-6">
+            <div>
+              <!-- <label for="pais" class="col-form-label fs-5" style="width: 100%; text-align: center">País:</label>
+              <input style="width: 100%; text-align: center" type="text" class="form-control fs-6 a" name="pais"
+                id="pais" required [(ngModel)]="pais" /> -->
+
+
+              <label for="pais" class="col-form-label fs-5" style="width: 100%; text-align: center">País:</label>
+              <input style="width: 100%; text-align: center" type="text" class="form-control fs-6 a" name="pais"
+                id="pais" required [(ngModel)]="pais" list="sugerencias" (keyup.enter)="pasarASiguienteInput(); obtenerCiudadesPorPais()" />
+
+              <datalist id="sugerencias">
+                <option *ngFor="let pais of lista_paises | keyvalue" [value]="pais.key"></option>
+              </datalist>
+
+              <!-- <label for="pais" class="col-form-label fs-5" style="width: 100%; text-align: center">País:</label>
+                  <select style="width: 100%; text-align: center" class="form-control fs-6 a" name="pais" id="pais"
+                    required [(ngModel)]="pais">
+                    <option *ngFor="let pais of lista_paises | keyvalue" [value]="pais.key">{{ pais.key }}</option>
+                  </select> -->
+
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="">
+              <label for="provincia" class="col-form-label fs-5" style="width: 100%; text-align: center">Ciudad:</label>
+              <input style="width: 100%; text-align: center" type="text" class="form-control fs-6 a" name="provincia"
+                id="provincia" placeholder="Salta" [(ngModel)]="provincia" required list="sugerenciasCiudades"  (click)="obtenerCiudadesPorPais()"/>
+            </div>
+          </div>
+
+          <datalist id="sugerenciasCiudades">
+            <option *ngFor="let ciudad of ciudadesPorPais" [value]="ciudad"></option>
+          </datalist>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="consumo_mean_lts" class="col-form-label fs-6" style="width: 100%; text-align: center">
+            Consumo diario promedio (lts)</label>
+          <input style="width: 100%; text-align: center" type="number" class="form-control fs-6 a"
+            name="consumo_mean_lts" id="consumo_mean_lts" [(ngModel)]="consumo_mean_lts" required />
+        </div>
+
+        <div class="col-6 mt-3">
+          <div class="mb-1" style="text-align: center">
+            <label class="fs-6">Es ferriado o fin de semana?</label>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label fs-6" for="x3_si">Sí</label>
+                <input type="radio" class="form-check-input" id="x3_si" name="x3" [value]="true"
+                  [(ngModel)]="esFinDeSemana" checked />
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="x3_no" name="x3" [value]="false"
+                  [(ngModel)]="esFinDeSemana" />
+                <label class="form-check-label fs-6" for="x3_no">No</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 mt-3">
+        <button type="submit" class="btn btn-dark col-12" name="enviar">
+          <i class=" fa-beat-fade fs-4" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+          font-style: normal !important">Estimar consumo de cerveza
+          </i>
+
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container card">
+  <h3 class="text-center mt-2">Consumo diario de cerveza</h3>
+  <div class="">
+    <ul class="" *ngIf="datosClimaticos">
+      <li class="form-control a">
+        <div class="text-center">
+          <strong>City:</strong> {{ datosClimaticos.name }},
+          {{ datosClimaticos.sys.country }}
+        </div>
+        <div class="text-center">
+          <strong>Temperatura:</strong> {{ datosClimaticos.main.temp }} °C -
+          {{ datosClimaticos.weather[0].description }}
+          <span *ngIf="mm_lluvia > 0"> ( ☔{{ mm_lluvia }}mm)</span>
+        </div>
+      </li>
+      <li class="form-control fs-3 a text-center" *ngIf="calcular()>=0">
+        <i class="fa fa-bounce fs-4 " style="color:antiquewhite">
+          {{ consumo_mean_lts_result | number : "1.0-0" }} lts
+          <img style="width:45px; height:40px" src="assets/beer.png" alt="Beer Image">
+        </i>
+        <i class="fa fa-fade fs-3 "
+          style="color:dodgerblue;font-weight: 500;font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+          (+{{calcular() | number : "1.2-2"}}%) genial!
+        </i>
+      </li>
+      <li class="form-control fs-3 a text-center" *ngIf="calcular()<0">
+        <i class="fa fa-shake fs-4 " style="color:antiquewhite">
+          {{ consumo_mean_lts_result | number : "1.0-0" }} lts
+          <img style="width:45px; height:40px" src="assets/beer.png" alt="Beer Image">
+        </i>
+        <i class="fa fa-fade fs-3 "
+          style="color: crimson;font-weight: 500;font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+          ({{calcular() | number : "1.2-2"}}%) ups!
+        </i>
+      </li>
+
+    </ul>
+  </div>
+</div>

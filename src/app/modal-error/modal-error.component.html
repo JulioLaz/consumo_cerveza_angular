@@ -1,0 +1,18 @@
+<div class="bg" style="border-radius: 5px; color: beige;">
+
+  <div class="modal-header">
+    <h4 class="modal-title fs-1">Error</h4>
+  </div>
+  <div class="modal-body" style="background-color:rgba(240, 232, 218, 0.5);color:black;font-weight: 400;">
+    <div class="fs-3 text-center">
+      {{ titulo }}
+    </div>
+    <div class="fs-4 text-center">
+    {{ mensaje }}
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="activeModal.close()">Cerrar</button>
+  </div>
+
+</div>
