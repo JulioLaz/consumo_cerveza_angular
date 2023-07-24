@@ -9,7 +9,7 @@ export class CalcularComponent {
   lluvia:number=0;
   coeficientes = [[5951.97633931], [684.73675898], [-60.7824355], [5401.08333866]];
   consumo_mean:number= 25401.3671232876;
-  esFinDeSemana: boolean = true;
+  esFeriado: boolean = true;
   consumo_mean_lts:number=1000;
   consumo_mean_lts_result:number=0;
   mm_lluvia: number = 0;
@@ -23,7 +23,7 @@ export class CalcularComponent {
 calculo_sin_api(): number {
   const x1 = this.temp;
   const x2 = this.lluvia;
-  const x3 = this.esFinDeSemana;
+  const x3 = this.esFeriado;
 
   let consumo: number;
 

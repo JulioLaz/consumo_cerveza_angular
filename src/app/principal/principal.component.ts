@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,LOCALE_ID, Inject } from '@angular/core';
 import { ClimaService } from '../serveice/clima.service';
 import { GeolocationService } from '../serveice/geolocation.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalErrorComponent } from '../modal-error/modal-error.component';
+import { TmplAstRecursiveVisitor } from '@angular/compiler';
 
 const lluviaDescripcionPromedio: { [descripcion: string]: number } = {
   'lluvia ligera': (2.5 + 7.5) / 2,
@@ -52,16 +53,23 @@ export class PrincipalComponent implements OnInit {
   lluvia: number = 0;
   coeficientes = [[5951.97633931], [684.73675898], [-60.7824355], [5401.08333866]];
   consumo_mean: number = 25401.3671232876;
-  esFinDeSemana: boolean = true;
+  esFeriado: boolean = false;
   consumo_mean_lts: number = 1000;
   consumo_mean_lts_result: number = 0;
   mm_lluvia: number = 0;
   locationData: any;
+  fullDate: string | undefined;
+  currentDay: string | undefined;
+  year: string | undefined;
+  month: string | undefined;
+  day_numeric: string | undefined;
 
   sugerencias: string[] = [];
   mostrarSugerencias: boolean = false;
+  esFinDeSemana:boolean=false;
 
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private climaService: ClimaService,
     private geolocationService: GeolocationService,
     private modalService: NgbModal
@@ -69,6 +77,7 @@ export class PrincipalComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerDatosClimaticos();
+    this.getCurrentDay();
     this.geolocationService.getGeolocation().subscribe(
       (data) => {
         this.locationData = data;
@@ -81,6 +90,18 @@ export class PrincipalComponent implements OnInit {
         console.error('Error al obtener la ubicación:', error);
       }
     );
+  }
+
+  getCurrentDay() {
+    const today = new Date();
+    this.currentDay = today.toLocaleString(this.locale, { weekday: 'long' });
+    this.year = today.toLocaleString(this.locale, { year: 'numeric'});    console.log('Día year: ',this.year)
+    this.month = today.toLocaleString(this.locale, { month: 'long'});    console.log('Día month: ',this.month)
+    this.day_numeric = today.toLocaleString(this.locale, { day: 'numeric' });    console.log('Día actual: ',this.day_numeric)
+    if (this.currentDay === 'Friday' || this.currentDay === 'Saturday' || this.currentDay === 'Sunday') {
+        this.esFinDeSemana=true
+    }
+    console.log('Es fin de semana: ',this.esFinDeSemana)
   }
 
   pasarASiguienteInput() {
@@ -122,7 +143,7 @@ export class PrincipalComponent implements OnInit {
               const descripcionClima: string = this.datosClimaticos.weather[0].description;
               this.mm_lluvia = lluviaDescripcionPromedio[descripcionClima] || 0;
               // console.log('mm_lluvia',this.mm_lluvia)
-              console.log(JSON.stringify(data))
+              // console.log(JSON.stringify(data))
             };
           },
           error: (error) => {
@@ -132,7 +153,7 @@ export class PrincipalComponent implements OnInit {
           },
           complete: () => {
             this.calcular();
-            console.info('complete')
+            // console.info('complete')
           }
         })
     }
@@ -141,15 +162,15 @@ export class PrincipalComponent implements OnInit {
   calcular(): number {
     const x1 = this.datosClimaticos.main.temp;
     const x2 = this.mm_lluvia;
-    const x3 = this.esFinDeSemana;
+    const x3 = this.esFeriado;
 
     let consumo: number;
 
-    if (x3 == true) {
+    if (x3 == true || this.esFinDeSemana==true) {
       const consumo_hoy = this.coeficientes[0][0] + x1 * this.coeficientes[1][0] + x2 * this.coeficientes[2][0] + this.coeficientes[3][0];
       consumo = (consumo_hoy - this.consumo_mean) * 100 / this.consumo_mean;
       this.consumo_mean_lts_result = (this.consumo_mean_lts * (consumo / 100)) + this.consumo_mean_lts
-    } else if (x3 == false) {
+    } else if (x3 == false && this.esFinDeSemana==false) {
       const consumo_hoy = this.coeficientes[0][0] + x1 * this.coeficientes[1][0] + x2 * this.coeficientes[2][0];
       consumo = (consumo_hoy - this.consumo_mean) * 100 / this.consumo_mean;
       this.consumo_mean_lts_result = (this.consumo_mean_lts * (consumo / 100)) + this.consumo_mean_lts
@@ -157,7 +178,7 @@ export class PrincipalComponent implements OnInit {
       consumo = 0;
       this.consumo_mean_lts_result = 0 // Asignar un valor predeterminado en caso de que x3 no sea ni true ni false
     }
-
+    // console.log('valor de x3', x3, ' y esFinDeSemana: ', this.esFinDeSemana)
     return consumo
   }
 

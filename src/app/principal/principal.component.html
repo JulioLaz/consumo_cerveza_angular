@@ -53,16 +53,16 @@
 
         <div class="col-6 mt-3">
           <div class="mb-1" style="text-align: center">
-            <label class="fs-6">Es ferriado o fin de semana?</label>
+            <label class="fs-6">Es ferriado?</label>
             <div class="form-group">
               <div class="form-check form-check-inline">
                 <label class="form-check-label fs-6" for="x3_si">Sí</label>
                 <input type="radio" class="form-check-input" id="x3_si" name="x3" [value]="true"
-                  [(ngModel)]="esFinDeSemana" checked />
+                  [(ngModel)]="esFeriado" />
               </div>
               <div class="form-check form-check-inline">
                 <input type="radio" class="form-check-input" id="x3_no" name="x3" [value]="false"
-                  [(ngModel)]="esFinDeSemana" />
+                  [(ngModel)]="esFeriado" checked/>
                 <label class="form-check-label fs-6" for="x3_no">No</label>
               </div>
             </div>
@@ -86,6 +86,15 @@
   <div class="">
     <ul class="" *ngIf="datosClimaticos">
       <li class="form-control a">
+        <div class="text-center" *ngIf="esFinDeSemana">
+          <h6 style="color: brown;">{{currentDay}} {{day_numeric}} of {{month}} {{year}} es finde!</h6>
+        </div>
+        <div class="text-center" *ngIf="esFeriado">
+          <h6 style="color: brown;">{{currentDay}} {{day_numeric}} of {{month}} {{year}} es feriado!</h6>
+        </div>
+        <div class="text-center" *ngIf="esFinDeSemana==false && esFeriado==false">
+          <h6 style="color:midnightblue;">{{currentDay}} {{day_numeric}} of {{month}} {{year}} es día normal</h6>
+        </div>
         <div class="text-center">
           <strong>City:</strong> {{ datosClimaticos.name }},
           {{ datosClimaticos.sys.country }}
@@ -95,6 +104,7 @@
           {{ datosClimaticos.weather[0].description }}
           <span *ngIf="mm_lluvia > 0"> ( ☔{{ mm_lluvia }}mm)</span>
         </div>
+
       </li>
       <li class="form-control fs-3 a text-center" *ngIf="calcular()>=0">
         <i class="fa fa-bounce fs-4 " style="color:antiquewhite">
