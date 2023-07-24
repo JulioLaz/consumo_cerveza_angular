@@ -1,27 +1,6 @@
-# CervezaAngular
+# Consumo de Cerveza
+https://calcular-consumo-cerveza.web.app/
+![image](https://github.com/JulioLaz/consumo_cerveza_angular/assets/108642139/3c793642-d815-4848-b094-26eaffb91ded)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Luego de analizar la base de datos de consumo de cerveza en San Pablo brasil de https://www.kaggle.com/datasets/dongeorge/beer-consumption-sao-paulo realice una regresión lineal utilizando como varible independiente el consumo de cerveza en litros y como variable dependientes las condicones climaticas de temperatura y mm de lluvia y si es feriado/fin de semana o día normal.
+Para obtener los datos del clima use la API:https://api.openweathermap.org y para la geolocalización la API:https://ipinfo.io
