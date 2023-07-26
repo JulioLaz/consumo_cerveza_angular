@@ -87,13 +87,13 @@
     <ul class="" *ngIf="datosClimaticos">
       <li class="form-control a">
         <div class="text-center" *ngIf="esFinDeSemana">
-          <h6 style="color: brown;">{{currentDay}} {{day_numeric}} of {{month}} {{year}} es finde!</h6>
+          <h6 style="color: brown;">{{currentDay}} {{day_numeric}} de {{month}} {{year}} es finde!</h6>
         </div>
         <div class="text-center" *ngIf="esFeriado">
-          <h6 style="color: brown;">{{currentDay}} {{day_numeric}} of {{month}} {{year}} es feriado!</h6>
+          <h6 style="color: brown;">{{currentDay}} {{day_numeric}} de {{month}} {{year}} es feriado!</h6>
         </div>
         <div class="text-center" *ngIf="esFinDeSemana==false && esFeriado==false">
-          <h6 style="color:midnightblue;">{{currentDay}} {{day_numeric}} of {{month}} {{year}} es día normal</h6>
+          <h6 style="color:midnightblue;">{{currentDay}} {{day_numeric}} de {{month}} {{year}} es día normal</h6>
         </div>
         <div class="text-center">
           <strong>City:</strong> {{ datosClimaticos.name }},
